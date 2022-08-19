@@ -1,34 +1,37 @@
+
+// break point
+@mixin media-md {
+	@media screen and (max-width: 768px) {
+		@content;
+	}
+}
+
 .loginContainer{
+    @include media-md{
+            justify-content: center;
+            flex-direction: column;
+        }
     background:#FFD370;
     .vhContainer {
         height: 100vh;
     }
     .loginPage {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: justify;
-            -ms-flex-pack: justify;
-                justify-content: space-around;
-        -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
         .side{
              display: flex;
              flex-direction: column;
+            @include media-md{
+                display: none;
+            }
             .d-m-n{
-                max-width: 400px;
+                max-width: 380px;
                 margin-top:10px;
               }
-            }
+        }
         .formControls {
-                margin-left: 100px;
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: flex;
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                    -ms-flex-direction: column;
+                        display: flex;
                         flex-direction: column;
                         .contentTitle{
                             font-size: 1.5rem;
@@ -50,6 +53,7 @@
                             border-radius: 10px;
                             padding: 12px 16px;
                             width: 304px;
+                            height: 47px;
                             display: flex;
                             flex-direction: row;
                             align-items: flex-start;
@@ -58,11 +62,9 @@
                             text-align: start;
                             color: #9F9A91;
                             font-size: 20px;
+                            font-weight: 500;
                         }
                         .formControls_btnSubmit{
-                            // display: flex;
-                            // flex-direction: row;
-                            // align-items: flex-start;
                             text-align: center;
                             width: 128px;
                             height: 47px;
@@ -88,23 +90,14 @@
                             align-items: center;
                             flex-direction: column;
                         }
-                }
-        @media screen  and (max-width:768px){
-                    .side {
-                        .d-m-n{
-                            display: none;
+                        .errorMessage{
+                            text-align: left;
+                            color:#D87355;
+                            font-weight: 700;
+                            font-size: 14px;
+                            translate: 0% -42%;
                         }
-                    }
-                    .formControls{
-                        margin-left: 0px;
-                    }
+                }
         }
-      }
-    @media screen and (max-width:768px) {
-        .loginPage{
-            justify-content: center;
-            flex-direction: column;
-        }
-    }
 }
 
