@@ -1,0 +1,150 @@
+@mixin media-sm {
+	@media screen and (max-width: 540px) {
+		@content;
+	}
+}
+
+.Container{
+    background-image: linear-gradient(175deg, #FFD370 60%, #FFFFFF 40%);
+    margin: 0 auto;
+    height: 100%;
+    min-height: 100vh;
+    @include media-sm{
+        background: #FFD370;
+    }
+    .tabListContent{
+        width:500px;
+        margin: 0 auto;
+        @include media-sm{
+            width:80%;
+        }
+        .todoInput{
+            .inputBox{
+                position: relative;
+                margin-top: 80px;
+                .addInput{
+                    background: #FFFFFF;
+                    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+                    border-radius: 10px;
+                    width: 100%;
+                    height: 47px;
+                }
+                input{
+                    position: relative;
+                    bottom: 10px;
+                }
+                a{
+                    position: absolute;
+                    bottom: 10px;
+                    cursor: pointer;
+                    display: block;
+                    right: 4px;               
+                }
+            }
+        }
+        .todoList{
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
+            .tabFilter{
+                display: flex;
+                justify-content: space-evenly;
+                a{
+                    display: block;
+                    color: #9F9A91;
+                    text-decoration: none;
+                    line-height: 20px;
+                    font-weight: bold;
+                    text-align: center;
+                    padding: 16px;
+                    border-bottom: 2px solid #efefef;
+                    cursor: pointer;
+                }
+                li{
+                    width: 100%;
+                   
+                }
+                .active{
+                    color: #333333;
+                    border-bottom: 2px solid #333333;
+                }
+                
+            }
+            .todoList_items{
+                padding-top: 23px;
+                padding-left: 24px;
+                padding-right: 17px;
+                padding-bottom: 32px;
+                li{
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 17px;
+                    a{
+                        margin-left: 17px;
+                        display: block;
+                        font-size: 14px;
+                        color:#333333;
+                    }
+                }
+                .todoList_item{
+                    margin-bottom: 8px;
+                    .todoList_label{
+                        width: 100%;
+                        display: flex;
+                        border-bottom: 1px solid #e5e5e5;
+                        padding-bottom: 15px;
+                        color:#333333;
+                        line-height: 20px;
+                        cursor: pointer;
+                        .todoList_input{
+                            width: 20px;
+                            height: 20px;
+                            border: 1px solid #9F9A91;
+                            border-radius: 5px;
+                            margin-right: 16px;
+                            &:checked{
+                                background:url(../assets/img/checked.svg) no-repeat;
+                                border:  1px solid #FFFFFF;;
+
+                            }
+                            &:checked ~span{
+                                color: #9F9A91;
+                                text-decoration: line-through;
+                                transition: all 0.4s ease-in-out;
+                            }
+                        }
+                        .todoList_inputText{
+                            text-align: left;
+                            border: 1px solid #333333;
+                        }
+                    }
+                    .deleteItem{
+                        cursor: pointer;
+                    }
+                    .editItem{
+                        cursor: pointer;
+                    }
+                 
+                }
+            }
+            .todoList_complete{
+                display: flex;
+                justify-content: space-between;
+                .clearAllData{
+                    cursor: pointer;
+                }
+            }
+        }
+        .todoList_empty{
+            padding-top: 100px;
+            .todoList_emptyText{
+                font-size: 16px;
+                text-align: center;
+                color: #333333;
+                font-weight: 800;
+            }
+        }
+      
+    }
+    
+}

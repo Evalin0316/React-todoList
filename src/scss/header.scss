@@ -1,0 +1,45 @@
+@mixin media-sm {
+	@media screen and (max-width: 440px) {
+		@content;
+	}
+}
+
+.headerInfo{
+    display: flex;
+    justify-content: space-between;
+
+    .headerLogo{
+        padding-top:10px ;
+        padding-left: 32px;
+       @include media-sm{
+            width: 80%;
+       }
+    }
+
+    .rightHeader{
+        display: flex;
+        .headerLogo{
+          display: flex;
+          padding:10px;  
+        }
+        .userName{
+            color: #333333;
+            font-weight: 700;
+            font-size: 16px;
+            padding:20px;
+            @include media-sm{
+                display: none;
+            }
+        }
+        .logOut{
+            padding:20px;
+            font-size: 16px;
+            cursor: pointer;
+            @include media-sm{
+                padding-top: 20px;
+                padding-left: 0;
+           }
+        }
+    }
+
+}
