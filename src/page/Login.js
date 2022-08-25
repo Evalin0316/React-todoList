@@ -5,6 +5,8 @@ import LoginBg from "../assets/img/loginbg.png";
 import { useForm } from "react-hook-form";
 import  {userLogin, userRegister}  from "../scripts/api";
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const { useState , useEffect } = React;
 
@@ -15,6 +17,7 @@ function Login() {
     const [login,setLogin] = useState(false);
     const [status,setStatus]=useState('Login');
     const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;
+    const MySwal = withReactContent(Swal);
 
     useEffect(()=>{
       if(login){
@@ -35,7 +38,7 @@ function Login() {
         localStorage.setItem('userName',userName);
         setLogin(true);
       } catch (err) {
-        alert(err.response.data.message +':' + err.response.data.error);
+        MySwal.fire(err.response.data.message +':' + err.response.data.error);
       }
     }
 
@@ -45,8 +48,7 @@ function Login() {
         alert(response.data.message);
         setStatus('Login');
       } catch (err) {
-         alert(err.response.data.message +':' + err.response.data.error);
-        
+        MySwal.fire(err.response.data.message +':' + err.response.data.error);
       }
     }
 

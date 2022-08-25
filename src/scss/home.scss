@@ -132,6 +132,7 @@
                 justify-content: space-between;
                 .clearAllData{
                     cursor: pointer;
+                    color: #9F9A91;
                 }
             }
         }
@@ -147,4 +148,8 @@
       
     }
     
+}
+
+.swal2-container.swal2-top-end>.swal2-popup, .swal2-container.swal2-top-right>.swal2-popup{
+    width: 300px;
 }
