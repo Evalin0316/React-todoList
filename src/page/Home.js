@@ -13,7 +13,6 @@ function Home() {
 
   const [state, setState] = useState('all');
   const [additems, setAddItem] = useState([]);
-  const [edit,setEdit]= useState(false);
   const MySwal = withReactContent(Swal);
 
   const getList = async() =>{
@@ -49,22 +48,6 @@ function Home() {
     await getList();
   }
 
-  //edit狀態
-  // const onEditItemHandler = (id) => {
-  //   const usedTodo = additems.map((item) => {
-  //     if (item.id === id) { //打勾設為ture
-  //       return {
-  //         id: item.id,
-  //         text: item.text,
-  //         checked: !item.checked, //ture
-  //       };
-  //     }
-  //     return item;
-  //   });
-  //   console.log('usedTodo',usedTodo);
-  //   setData(usedTodo);
-  // };
-
   //已完成數量
   const dataComplete = (additems.filter((item) => !item.completed_at)).length;
   
@@ -86,7 +69,6 @@ function Home() {
       await deleteItem(x.id);
       getList();
     })
-    
     console.log(result)
     // await deleteItem(text);
     // setAddItem(result);
@@ -103,7 +85,6 @@ function Home() {
         showConfirmButton: false,
         timer: 1000
       })
-      getList()
     }catch(err){
       MySwal.fire('更新失敗');
     }
@@ -161,7 +142,8 @@ function Home() {
   const TodoItem = (props) => {
     const {item,onToggleItem,setDeleteItem,seteditItem} = props;
     const {id,content,completed_at} = item;
-    const  [save,setSave] = useState(content);
+    const [save,setSave] = useState(content);
+    const [edit,setEdit]= useState(false);
     const ChangeState = () =>{
       onToggleItem(id)
     }
@@ -174,6 +156,22 @@ function Home() {
         console.log(id,data);
         seteditItem(id,data);
         setEdit(false);
+        let updateData = additems.map((x)=>{
+          if(x.id === id){
+            return {
+              content: save,
+              id:x.id,
+              completed_at:''
+            }
+          }else{
+            return{
+              content: x.content,
+              id:x.id,
+              completed_at:x.completed_at
+            }
+          }
+        })
+        setAddItem(updateData)
     }
 
     const setEditStatus = () =>{
