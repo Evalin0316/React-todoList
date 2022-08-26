@@ -152,7 +152,7 @@ function Home() {
       <li>
         <label className="todoList_label">
           <input className="todoList_input" type="checkbox" checked={completed_at} onChange={ChangeState}/>
-         {edit === false ? <a>{content}</a> : <input  className="todoList_inputText" value={save} onChange={(e) => {setSave(e.target.value) }}/>}
+         {edit === false ? <span>{content}</span> : <input  className="todoList_inputText" value={save} onChange={(e) => {setSave(e.target.value) }}/>}
         </label>
         <div className="editItem">
           {edit === false ?
