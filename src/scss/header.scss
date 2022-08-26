@@ -26,13 +26,13 @@
             color: #333333;
             font-weight: 700;
             font-size: 16px;
-            padding:20px;
+            padding:24px 20px;
             @include media-sm{
                 display: none;
             }
         }
         .logOut{
-            padding:20px;
+            padding:24px 20px;
             font-size: 16px;
             cursor: pointer;
             @include media-sm{

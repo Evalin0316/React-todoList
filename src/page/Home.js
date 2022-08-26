@@ -1,11 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useContext } from "react";
 import Header from "../components/Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquarePlus, faXmark, faPencil,faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faPencil,faCheck,faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons';
 import emptyIcon from '../assets/img/todoEmpty.png';
 import { addTodo,getTodoList,deleteItem,statusChange,editItem } from '../scripts/api';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import  { ThemeContext }  from '../scripts/theme';
+import toast, { Toaster } from 'react-hot-toast';
+import AddInputFrom from "../components/InputForm";
+import TodoTabFilter from "../components/Tab";
 
 
 
@@ -13,7 +15,7 @@ function Home() {
 
   const [state, setState] = useState('all');
   const [additems, setAddItem] = useState([]);
-  const MySwal = withReactContent(Swal);
+  const theme = useContext(ThemeContext);
 
   const getList = async() =>{
     let item =  await getTodoList();
@@ -29,23 +31,49 @@ function Home() {
   const addItem = async(text) => {
     try{ 
       await addTodo({content:text});
-      await getList();
+      // const newData = {
+      //   id: new Date().getTime().toString(),
+      //   content:text,
+      //   checked: false,
+      // };
+      // setAddItem((item)=>{
+      //   console.log(item)
+      //   return item.concat(newData);
+      // })
+      toast.success('新增成功');
+      getList();
     }catch(err){
-      // alert('新增失敗');
-      MySwal.fire('新增失敗')
+      toast.error('新增失敗')
     }
   };
 
   //刪除項目method
-  const deleteItems = async(text) => {
-    await deleteItem(text);
-    await getList();
+  const deleteItems = async(id) => {
+    try{
+      await deleteItem(id);
+      const newData = additems.filter((item)=>item.id !== id);
+      setAddItem(newData);
+      toast.success('刪除成功');
+    }catch{
+      toast.error('刪除失敗')
+    }
+    
   }
 
   //分類checked 狀態
   const onToggleItemHandler = async(id) => {
-    await statusChange(id);
-    await getList();
+    const res = await statusChange(id);
+    const updataStatus  = res.data.completed_at;
+    setAddItem((pre)=>{
+      const newData=[...pre];
+      newData.filter(todo =>{
+        if(todo.id === id){
+          todo.completed_at = updataStatus;
+          return todo;
+        }
+      });
+      return newData;
+    })
   }
 
   //已完成數量
@@ -70,75 +98,21 @@ function Home() {
       getList();
     })
     console.log(result)
-    // await deleteItem(text);
-    // setAddItem(result);
   }
 
   //編輯項目
   const changeEditItem = async(id,data) =>{  
     try{
       await editItem(id,data);
-      MySwal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: '編輯成功',
-        showConfirmButton: false,
-        timer: 1000
-      })
+      toast.success('編輯成功')
     }catch(err){
-      MySwal.fire('更新失敗');
+      toast.error("更新失敗")
     }
     
   
   }
 
-  //新增項目component
-  const AddInputFrom = ({ onAdd }) => {
-    const inputItem = onAdd;
-    const [data, setData] = useState('');
-    const onAddHandle = (e) => {
-      e.preventDefault();
-      setData('');
-      inputItem(data);
-    }
-    return (
-      <div className="todoInput">
-        <div className="inputBox">
-          <input className="addInput" value={data} onChange={(e) => { setData(e.target.value) }} />
-          <a href="#" onClick={onAddHandle}><FontAwesomeIcon icon={faSquarePlus} size="3x" /></a>
-        </div>
-      </div>
-    )
-  }
-
-  //tab component
-  const TodoTabFilter = ({ todoState, onFilterChange }) => {
-    const filterType = todoState;
-    const FilterChange = onFilterChange;
-
-    const activeState = function (type) { //判斷狀態是否被選中
-      return filterType === type ? 'active' : '';
-    };
-
-    const tab = [
-      { state: 'all', title: '全部' },
-      { state: 'active', title: '待完成' },
-      { state: 'completed', title: '已完成' }
-    ];
-    return (
-      <ul className="tabFilter">
-        {tab.map((x, index) => (
-          <li key={index}>
-            <a
-              className={activeState(x.state)}
-              onClick={() => FilterChange(x.state)}
-            >{x.title}</a>
-          </li>
-        ))}
-      </ul>
-    )
-  }
-
+  //TodoList components
   const TodoItem = (props) => {
     const {item,onToggleItem,setDeleteItem,seteditItem} = props;
     const {id,content,completed_at} = item;
@@ -156,27 +130,23 @@ function Home() {
         console.log(id,data);
         seteditItem(id,data);
         setEdit(false);
-        let updateData = additems.map((x)=>{
-          if(x.id === id){
-            return {
-              content: save,
-              id:x.id,
-              completed_at:''
+        setAddItem((pre)=>{
+          const newData=[...pre];
+          newData.filter(todo=>{
+            if(todo.id === id){
+              todo.content = save;
+              return todo;
             }
-          }else{
-            return{
-              content: x.content,
-              id:x.id,
-              completed_at:x.completed_at
-            }
-          }
+          });
+          return newData;
         })
-        setAddItem(updateData)
     }
 
     const setEditStatus = () =>{
       setEdit(true);
     }
+
+ 
 
     return (
       <li>
@@ -197,12 +167,16 @@ function Home() {
     )
   }
 
-
+  const ThemeButton = () =>{
+    const {toggleTheme} = useContext(ThemeContext)
+    return <button className="modeButton" onClick={toggleTheme}><FontAwesomeIcon icon={faCircleHalfStroke} size="2x" /></button>
+  }
 
   return (
     <>
-      <div className="Container">
+      <div className="Container" style={{backgroundImage:theme.theme.background}}>
         <Header />
+       <div className="modeTheme"><ThemeButton/></div> 
         <div className="tabListContent">
           <AddInputFrom onAdd={addItem} />
           {additems.length ?
@@ -236,6 +210,10 @@ function Home() {
             </div>}
         </div>
       </div>
+      <Toaster
+      position="top-center"
+      reverseOrder={false}
+      />
     </>
   );
 }

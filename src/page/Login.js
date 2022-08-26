@@ -5,19 +5,17 @@ import LoginBg from "../assets/img/loginbg.png";
 import { useForm } from "react-hook-form";
 import  {userLogin, userRegister}  from "../scripts/api";
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import toast, { Toaster } from 'react-hot-toast';
 
 const { useState , useEffect } = React;
 
 function Login() {
-  const { register, handleSubmit, watch, formState: { errors }} = useForm();
+  const { register, handleSubmit, watch, formState: { errors },reset} = useForm();
     let navigate = useNavigate();
 
     const [login,setLogin] = useState(false);
     const [status,setStatus]=useState('Login');
     const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;
-    const MySwal = withReactContent(Swal);
 
     useEffect(()=>{
       if(login){
@@ -38,18 +36,32 @@ function Login() {
         localStorage.setItem('userName',userName);
         setLogin(true);
       } catch (err) {
-        MySwal.fire(err.response.data.message +':' + err.response.data.error);
+        toast.error(err.response.data.message +':' + err.response.data.error)
       }
     }
 
     const onRegisterSubmuit = async form =>{
       try {
         const response = await userRegister({user:form});
-        alert(response.data.message);
+        toast.success(response.data.message);
         setStatus('Login');
       } catch (err) {
-        MySwal.fire(err.response.data.message +':' + err.response.data.error);
+        toast.error(err.response.data.message +':' + err.response.data.error)
       }
+    }
+
+    const onRegister = () =>{
+      setStatus('register');
+      reset({},{
+        keepValues:false,
+      })
+    }
+
+    const onLogin = () =>{
+      setStatus('Login');
+      reset({},{
+        keepValues:false,
+      })
     }
 
     return (
@@ -65,7 +77,7 @@ function Login() {
                   <form className="formControls" onSubmit={handleSubmit(onSubmit)}>
                     <h2 className="contentTitle">最實用的線上代辦事項服務</h2>
                       <label className="loginTitle">Email</label>
-                      <input className="loginInput"   placeholder="請輸入email" {...register('email',{required:true,
+                      <input className="loginInput"  placeholder="請輸入email" {...register('email',{required:true,
                       pattern:{value:email_val}})}/>
                       <div className="errorMessage">{errors.email && errors.email.type==="required" && "此欄位不可為空"}</div>
                       <div className="errorMessage">{errors.email && errors.email.type==="pattern" && "email輸入格式有誤"}</div>
@@ -73,12 +85,12 @@ function Login() {
                       <input  className="loginInput"  placeholder="請輸入密碼" {...register('password',{required:true})}/>
                       <div className="sendData">
                       <button className="formControls_btnSubmit" type="submit">登入</button>
-                      <button className="formControls_btnLink" onClick={()=>setStatus('register')}>註冊帳號</button>
+                      <button className="formControls_btnLink" id="registerBtn" onClick={()=>onRegister()}>註冊帳號</button>
                       </div>
                   </form>
                 </div>
             </div>
-        </div> 
+        </div>
         :
         //register
         <div id="loginPage" className="loginContainer">
@@ -91,7 +103,7 @@ function Login() {
                 <form className="formControls" onSubmit={handleSubmit(onRegisterSubmuit)}>
                   <h2 className="contentTitle">註冊帳號</h2>
                     <label className="loginTitle">Email</label>
-                    <input className="loginInput" name="register_email" autocomplete="off" placeholder="請輸入email" {...register('email',{required:true,
+                    <input className="loginInput" id="email" name="register_email" autoComplete="off" placeholder="請輸入email" {...register('email',{required:true,
                       pattern:{value:/^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m}})}/>
                     <div className="errorMessage">{errors.email && errors.email.type==="required" && "此欄位不可為空"}</div>
                     <div className="errorMessage">{errors.email && errors.email.type==="pattern" && "email輸入格式有誤"}</div>
@@ -103,13 +115,17 @@ function Login() {
                     <input  className="loginInput" name="register_passowordII" placeholder="請再次輸入密碼" {...register('password',{required:true})}/>
                     <div className="sendData">
                     <button className="formControls_btnSubmit" type="submit">註冊帳號</button>
-                    <button className="formControls_btnLink" onClick={()=>setStatus('Login')}>登入</button>
+                    <button className="formControls_btnLink" onClick={()=>onLogin()}>登入</button>
                     </div>
                 </form>
               </div>
           </div>
         </div>
           }
+          <Toaster
+          position="top-center"
+          reverseOrder={false}
+          />
         </>
     );
   }
