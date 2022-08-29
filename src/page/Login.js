@@ -83,7 +83,7 @@ function Login() {
                       <div className="errorMessage">{errors.email && errors.email.type==="required" && "此欄位不可為空"}</div>
                       <div className="errorMessage">{errors.email && errors.email.type==="pattern" && "email輸入格式有誤"}</div>
                       <label className="loginTitle">密碼</label>
-                      <input  className="loginInput"  placeholder="請輸入密碼" {...register('password',{required:true})}/>
+                      <input  className="loginInput" type="password" placeholder="請輸入密碼" {...register('password',{required:true})}/>
                       <div className="sendData">
                       <button className="formControls_btnSubmit" type="submit">登入</button>
                       <button className="formControls_btnLink" id="registerBtn" onClick={()=>onRegister()}>註冊帳號</button>
@@ -111,9 +111,9 @@ function Login() {
                     <label className="loginTitle">您的暱稱</label>
                     <input className="loginInput" name="register_name" placeholder="請輸入您的暱稱" {...register('nickname',{required:true})}/>
                     <label className="loginTitle">密碼</label>
-                    <input  className="loginInput" name="register_password" placeholder="請輸入密碼" {...register('password',{required:true})}/>
+                    <input  className="loginInput" type="password" name="register_password" placeholder="請輸入密碼" {...register('password',{required:true})}/>
                     <label className="loginTitle">再次輸入密碼</label>
-                    <input  className="loginInput" name="register_passowordII" placeholder="請再次輸入密碼" {...register('password',{required:true})}/>
+                    <input  className="loginInput" type="password" name="register_passowordII" placeholder="請再次輸入密碼" {...register('password',{required:true})}/>
                     <div className="sendData">
                     <button className="formControls_btnSubmit" type="submit">註冊帳號</button>
                     <button className="formControls_btnLink" onClick={()=>onLogin()}>登入</button>
