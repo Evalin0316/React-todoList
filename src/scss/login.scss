@@ -19,15 +19,24 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            @include media-md{
+                justify-content: center;
+                flex-direction: column;
+            }
         .side{
              display: flex;
              flex-direction: column;
-            @include media-md{
-                display: none;
+            .logoImg{
+                @include media-md{
+                    margin-bottom: 20px;
+                }
             }
             .d-m-n{
                 max-width: 380px;
                 margin-top:10px;
+                @include media-md{
+                    display: none;
+                }
               }
         }
         .formControls {
