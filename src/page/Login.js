@@ -13,9 +13,10 @@ function Login() {
   const { register, handleSubmit, watch, formState: { errors },reset} = useForm();
     let navigate = useNavigate();
 
+    
     const [login,setLogin] = useState(false);
     const [status,setStatus]=useState('Login');
-    const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;
+    const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;  // eslint-disable-line
 
     useEffect(()=>{
       if(login){
@@ -52,14 +53,14 @@ function Login() {
 
     const onRegister = () =>{
       setStatus('register');
-      reset({},{
+      reset({email:null,password:null,nickname:null},{ //清空欄位資料
         keepValues:false,
       })
     }
 
     const onLogin = () =>{
       setStatus('Login');
-      reset({},{
+      reset({email:null,password:null},{ //清空欄位資料
         keepValues:false,
       })
     }
