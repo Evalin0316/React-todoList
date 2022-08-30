@@ -112,14 +112,17 @@ function Login() {
                     <input className="loginInput" name="register_name" placeholder="請輸入您的暱稱" {...register('nickname',{required:true})}/>
                     <label className="loginTitle">密碼</label>
                     <input  className="loginInput" type="password" name="register_password" placeholder="請輸入密碼" {...register('password',{required:true,minLength:{value:6}})}/>
+                    <div className="errorMessage">{errors.password && errors.password.type==="required" && "此欄位不可為空"}</div>
                     <div className="errorMessage">{errors.password && errors.password.type==="minLength" && "密碼長度至少為6碼"}</div>
                     <label className="loginTitle">再次輸入密碼</label>
                     <input  className="loginInput" type="password" name="register_passowordII" placeholder="請再次輸入密碼" {...register('checkpassword',{required:true,minLength:{value:6} ,validate: (value) => {
                     if (watch('password') !== value) {
-                      return "兩次密碼輸入不同";
+                      return "與第一次密碼輸入不同";
                     }
                 }})}/>
-                    {/* <div className="errorMessage">{errors.checkpassword && errors.password.type==="minLength" && "密碼長度至少為6碼"}</div> */}
+                    <div className="errorMessage">{errors.checkpassword && errors.checkpassword.type==="minLength" && "密碼長度至少為6碼"}</div>
+                    <div className="errorMessage">{errors.checkpassword&& errors.checkpassword.type==="required" && "此欄位不可為空"}</div>
+                    <div className="errorMessage">{errors.checkpassword&& errors.checkpassword.type==="validate" && errors.checkpassword.message}</div>
                     <div className="sendData">
                     <button className="formControls_btnSubmit" type="submit">註冊帳號</button>
                     <button className="formControls_btnLink" onClick={()=>onLogin()}>登入</button>
