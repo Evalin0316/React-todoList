@@ -37,7 +37,8 @@ function Login() {
         localStorage.setItem('userName',userName);
         setLogin(true);
       } catch (err) {
-        toast.error(err.response.data.message +':' + err.response.data.error)
+        console.log(err)
+        toast.error(err.response.data.message);
       }
     }
 
@@ -47,6 +48,7 @@ function Login() {
         toast.success(response.data.message);
         setStatus('Login');
       } catch (err) {
+        console.log(err);
         toast.error(err.response.data.message +':' + err.response.data.error)
       }
     }
