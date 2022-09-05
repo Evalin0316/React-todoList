@@ -1,21 +1,20 @@
-import React from "react";
+import React,{useContext,useEffect} from "react";
 import Logo from "../assets/img/todoListLogo.png";
 import { useNavigate } from 'react-router-dom';
 import  { userLogout }  from "../scripts/api";
-
-
-const { useState , useEffect } = React;
+import  { LoignStatus }  from '../scripts/theme';
 
 function Header(){
-    const [logOut,setLogOut] = useState(false);
+    // const [logOut,setLogOut] = useState(false);
     const userName = JSON.parse(localStorage.userName).user.nickname;
     let navigate = useNavigate();
+    const loignStatus = useContext(LoignStatus);
 
     const handleClick = async() =>{
         try {
             const response = await userLogout();
             alert(response.data.message);
-            setLogOut(true)
+            loignStatus.setlogin(false);
           } catch (err) {
             alert(err.response.data.message);
           }
@@ -24,10 +23,10 @@ function Header(){
     
 
     useEffect(()=>{
-        if(logOut){
+        if(loignStatus.login === false){
           navigate('/');
         }
-    });
+    },[loignStatus.login]);
 
 
     return (

@@ -1,28 +1,28 @@
 // import {Link} from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "../assets/img/todoListLogo.png";
 import LoginBg from "../assets/img/loginbg.png";
 import { useForm } from "react-hook-form";
 import  {userLogin, userRegister}  from "../scripts/api";
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import  { LoignStatus }  from '../scripts/theme';
 
 const { useState , useEffect } = React;
 
 function Login() {
   const { register, handleSubmit, watch, formState: { errors },reset} = useForm();
-    let navigate = useNavigate();
+  let navigate = useNavigate();
+  const loignStatus = useContext(LoignStatus);
 
-    
-    const [login,setLogin] = useState(false);
     const [status,setStatus]=useState('Login');
     const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;  // eslint-disable-line
 
     useEffect(()=>{
-      if(login){
+      if(loignStatus.login){
         navigate('/home');
       }
-    });
+    },[loignStatus.login]);
 
     //login
     const onSubmit = async form =>{
@@ -34,8 +34,8 @@ function Login() {
         const token = JSON.stringify({token:response.headers})
         const userName = JSON.stringify({user:response.data})
         localStorage.setItem('token', token);
-        localStorage.setItem('userName',userName);
-        setLogin(true);
+        localStorage.setItem('userName',userName)
+        loignStatus.setlogin(true);
       } catch (err) {
         console.log(err)
         toast.error(err.response.data.message);

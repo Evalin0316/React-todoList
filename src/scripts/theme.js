@@ -14,17 +14,32 @@ export const ThemeContext = React.createContext({
   theme: themes.light,
   toggleTheme: () => {}
 });
+
+export const LoignStatus = React.createContext({
+  login:false,
+  setlogin:() =>{}
+});
 const ThemeProvider = ({ children }) => {
   const [light, setLight] = useState(true);
+  const [login, setLogin] = useState(false);
   const toggleTheme = () => setLight(!light);
+  const setlogin = () =>  setLogin(!login);
   const theme = light ?  themes.light : themes.dark ;
+ 
+  
   const defaultValue = {
     toggleTheme,
-    theme
+    theme,
   };
+  const userStatus = {
+    setlogin,
+    login
+  }
   return (
     <ThemeContext.Provider value={defaultValue}>
+    <LoignStatus.Provider value={userStatus}>
       {children}
+    </LoignStatus.Provider>
     </ThemeContext.Provider>
   );
 };
