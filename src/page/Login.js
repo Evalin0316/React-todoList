@@ -19,7 +19,7 @@ function Login() {
     const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;  // eslint-disable-line
 
     useEffect(()=>{
-      if(loignStatus.login){
+      if(loignStatus.login === true){
         navigate('/home');
       }
     },[loignStatus.login]);

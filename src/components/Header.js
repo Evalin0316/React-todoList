@@ -1,45 +1,44 @@
-import React,{useContext,useEffect} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logo from "../assets/img/todoListLogo.png";
 import { useNavigate } from 'react-router-dom';
-import  { userLogout }  from "../scripts/api";
-import  { LoignStatus }  from '../scripts/theme';
+import { userLogout } from "../scripts/api";
+import { LoignStatus } from '../scripts/theme';
 
-function Header(){
-    // const [logOut,setLogOut] = useState(false);
+function Header() {
+    const [islogOut,setIsLogOut] = useState(false);
     const userName = JSON.parse(localStorage.userName).user.nickname;
     let navigate = useNavigate();
-    const loignStatus = useContext(LoignStatus);
-
-    const handleClick = async() =>{
+    const loignStatus = useContext(LoignStatus)
+    const handleClick = async () => {
         try {
             const response = await userLogout();
+            setIsLogOut(true);
             alert(response.data.message);
-            loignStatus.setlogin(false);
-          } catch (err) {
+        } catch (err) {
             alert(err.response.data.message);
-          }
         }
-       
-    
+    }
 
-    useEffect(()=>{
-        if(loignStatus.login === false){
-          navigate('/');
+    useEffect(() => {
+        if (islogOut) {
+            console.log(islogOut)
+            loignStatus.setlogin(false);
+            navigate('/');
         }
-    },[loignStatus.login]);
+    }, [islogOut]);
 
 
     return (
         <>
-        <div className="headerInfo">
-        <div className="headerLogo"><img className="logo" src={Logo} alt=""/></div>
-        <div className="rightHeader">
-        <div className="userName">{userName}的代辦</div>
-        <div className="logOut"  onClick={handleClick}>登出</div>
-        </div>
-       </div>
+            <div className="headerInfo">
+                <div className="headerLogo"><img className="logo" src={Logo} alt="" /></div>
+                <div className="rightHeader">
+                    <div className="userName">{userName}的代辦</div>
+                    <div className="logOut" onClick={handleClick}>登出</div>
+                </div>
+            </div>
         </>
-    )    
+    )
 }
 
 
