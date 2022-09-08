@@ -3,7 +3,11 @@
 		@content;
 	}
 }
-
+@mixin media-sm-min {
+	@media screen and (min-width: 768px) {
+		@content;
+	}
+}
 .Container{
     // background-image: linear-gradient(175deg, #FFD370 60%, #FFFFFF 40%);
     margin: 0 auto;
@@ -16,8 +20,29 @@
         display: flex;
         justify-content: flex-end;
         padding: 0 20px;
+        position: relative;
         .modeButton{
-            cursor: pointer;
+           cursor: pointer;
+           @include media-sm-min{
+            position: absolute;
+            bottom: 20px;
+            right: 190px;
+           }
+        }
+        .modeButton:hover{
+            color:#3995d6;
+            animation: rotation 3s infinite linear;
+        }
+        @keyframes rotation {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(359deg);
+            }
+            0%{   color: #cf8138;}
+            50%{  color: #FFD370;}
+            100%{ color: #68a8bb;}
         }
     }
     .tabListContent{
@@ -157,7 +182,6 @@
                 font-weight: 800;
             }
         }
-      
     }
     
 }

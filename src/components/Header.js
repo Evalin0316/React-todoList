@@ -21,7 +21,6 @@ function Header() {
 
     useEffect(() => {
         if (islogOut) {
-            console.log(islogOut)
             loignStatus.setlogin(false);
             navigate('/');
         }
