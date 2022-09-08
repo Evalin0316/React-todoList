@@ -40,6 +40,7 @@ function Home() {
       //   console.log(item)
       //   return item.concat(newData);
       // })
+      setState('all'); //新增項目時，全部選單active
       toast.success('新增成功');
       getList();
     }catch(err){
