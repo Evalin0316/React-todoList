@@ -102,7 +102,8 @@ function Home() {
   }
 
   //編輯項目
-  const changeEditItem = async(id,data) =>{  
+  const changeEditItem = async(id,data) =>{
+      
     try{
       await editItem(id,data);
       toast.success('編輯成功')

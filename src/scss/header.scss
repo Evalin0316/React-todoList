@@ -43,3 +43,43 @@
     }
 
 }
+
+
+.dialog{
+    width: 500px;
+    position: absolute;
+    right: 80px;
+    top: 10px;
+    background: wheat;
+    z-index: 9999;
+    border-radius: 10px;
+    box-shadow: #333333;
+    .titleLogout{
+        font-size: 20px;
+        padding: 20px;
+        margin-right: 10px;
+    }
+    .question{
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        .confirmBtn{
+            border: 1px solid royalblue;
+            background: white;
+            padding: 10px;
+            width: 100px;
+            border-radius: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .cancelBtn{
+            border: 1px solid rosybrown;
+            background: white;
+            padding: 10px;
+            width: 100px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    }
+
+}
