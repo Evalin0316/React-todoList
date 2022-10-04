@@ -35,6 +35,7 @@
             padding:24px 20px;
             font-size: 16px;
             cursor: pointer;
+            transition:transform 5s;
             @include media-sm{
                 padding-top: 20px;
                 padding-left: 0;
@@ -44,42 +45,67 @@
 
 }
 
-
-.dialog{
-    width: 500px;
-    position: absolute;
-    right: 80px;
-    top: 10px;
-    background: wheat;
-    z-index: 9999;
-    border-radius: 10px;
-    box-shadow: #333333;
-    .titleLogout{
-        font-size: 20px;
-        padding: 20px;
-        margin-right: 10px;
-    }
-    .question{
-        display: flex;
-        justify-content: center;
-        padding: 10px;
-        .confirmBtn{
-            border: 1px solid royalblue;
-            background: white;
-            padding: 10px;
-            width: 100px;
-            border-radius: 10px;
+.dialogModal{
+    .dialog{
+        position: absolute;
+        right: 80px;
+        top: 10px;
+        background: white;
+        z-index: 1000;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px #555555;
+        opacity:0;
+        animation: sketchIn .5s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+        .titleLogout{
+            font-size: 18px;
+            padding: 20px;
             margin-right: 10px;
-            cursor: pointer;
         }
+        .question{
+                display: flex;
+                justify-content: center;
+                padding: 10px;
+        .confirmBtn{
+                border: 1px solid royalblue;
+                background: white;
+                padding: 8px;
+                width: 100px;
+                border-radius: 10px;
+                margin-right: 10px;
+                cursor: pointer;
+                &:hover{
+                background: royalblue;
+                color: white;
+                }
+            }
         .cancelBtn{
-            border: 1px solid rosybrown;
-            background: white;
-            padding: 10px;
-            width: 100px;
-            border-radius: 10px;
-            cursor: pointer;
+                border: 1px solid #FFD370;
+                background: white;
+                padding: 8px;
+                width: 100px;
+                border-radius: 10px;
+                cursor: pointer;
+                &:hover{
+                background: #FFD370;
+                color:white;
+                }
+            }
         }
-    }
 
+    }
 }
+
+@keyframes sketchIn {
+    0% {
+        opacity:1;
+        transform:scaleY(.005) scaleX(0);
+    }
+    50% {
+        opacity:1;
+        transform:scaleY(.005) scaleX(1);
+    }
+    100% {
+        opacity:1;
+        transform:scaleY(1) scaleX(1);
+    }
+  }
