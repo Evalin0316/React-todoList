@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Logo from "../assets/img/todoListLogo.png";
 import { useNavigate } from 'react-router-dom';
-// import { userLogout } from "../scripts/api";
+import { userLogout } from "../scripts/api";
 import { LoignStatus } from '../scripts/theme';
 import LogoutDialog from '../components/LogoutDialog';
 
@@ -10,15 +10,10 @@ function Header() {
     const userName = JSON.parse(localStorage.userName).user.nickname;
     let navigate = useNavigate();
     const loignStatus = useContext(LoignStatus);
-    const [dialog,setDialog] = useState(false);
+    const [dialog,setDialog] = useState(false); //dialog 顯示
     const handleClick = async () => {
         try {
-            // const response = await userLogout();
             setDialog(true);
-           
-            // setIsLogOut(true);
-        
-            // alert(response.data.message);
         } catch (err) {
             alert(err.response.data.message);
         }
@@ -26,6 +21,12 @@ function Header() {
 
     useEffect(() => {
         if (islogOut) {
+            const logOut = async() =>{
+                const response = await userLogout();
+                alert(response.data.message);
+            }
+            logOut();
+            setIsLogOut(true);
             loignStatus.setlogin(false);
             navigate('/');
         }

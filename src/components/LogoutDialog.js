@@ -1,7 +1,6 @@
 import React from "react";
 
 const LogoutDialog = ({setDialog,setIsLogOut}) =>{
-    console.log(setDialog)
     const setDialogs = setDialog;
     const setlogOut = setIsLogOut;
     const logOut = () => {
