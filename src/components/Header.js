@@ -34,7 +34,7 @@ function Header() {
             loignStatus.setlogin(false);
             navigate('/');
         }
-    }, [islogOut]);
+    }, [islogOut, loignStatus, navigate]);
 
     const ThemeButton = () =>{
         const {toggleTheme} = useContext(ThemeContext)

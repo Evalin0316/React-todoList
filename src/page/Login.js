@@ -17,14 +17,14 @@ function Login() {
   const Login = loginStatus.login;
 
     const [status,setStatus]=useState('Login');
-     // eslint-disable-next-line
-    const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;
+
+    const email_val = /^([A-Za-z0-9_.\-+])+@(([a-zA-Z0-9_-])+\.)+([a-zA-Z0-9.]{2,4})+$/m;
 
     useEffect(()=>{
       if(Login === true){
         navigate('/home');
-      } // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[Login]);
+      }
+    },[Login, navigate]);
 
     //login
     const onSubmit = async form =>{
@@ -109,8 +109,8 @@ function Login() {
                   <h2 className="contentTitle">註冊帳號</h2>
                     <label className="loginTitle">Email</label>
                     <input className="loginInput" id="email" name="register_email" autoComplete="off" placeholder="請輸入email" {...register('email',{required:true,
-                      pattern:{// eslint-disable-next-line
-                      value:/^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m}})}/> 
+                      pattern:{
+                      value:/^([A-Za-z0-9_.\-+])+@(([a-zA-Z0-9_-])+\.)+([a-zA-Z0-9.]{2,4})+$/m}})}/> 
                     <div className="errorMessage">{errors.email && errors.email.type==="required" && "此欄位不可為空"}</div>
                     <div className="errorMessage">{errors.email && errors.email.type==="pattern" && "email輸入格式有誤"}</div>
                     <label className="loginTitle">您的暱稱</label>
