@@ -1,7 +1,7 @@
 import React, { useState,useEffect, useContext } from "react";
 import Header from "../components/Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faPencil,faCheck,faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faPencil,faCheck } from '@fortawesome/free-solid-svg-icons';
 import emptyIcon from '../assets/img/todoEmpty.png';
 import { addTodo,getTodoList,deleteItem,statusChange,editItem } from '../scripts/api';
 import  { ThemeContext }  from '../scripts/theme';
@@ -169,16 +169,11 @@ function Home() {
     )
   }
 
-  const ThemeButton = () =>{
-    const {toggleTheme} = useContext(ThemeContext)
-    return <button className="modeButton" onClick={toggleTheme}><FontAwesomeIcon icon={faCircleHalfStroke} size="2x" /></button>
-  }
 
   return (
     <>
       <div className="Container" style={{backgroundImage:theme.theme.background}}>
         <Header />
-       <div className="modeTheme"><ThemeButton/></div> 
         <div className="tabListContent">
           <AddInputFrom onAdd={addItem} />
           {additems.length ?

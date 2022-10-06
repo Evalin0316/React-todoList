@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { userLogout } from "../scripts/api";
 import { LoignStatus } from '../scripts/theme';
 import LogoutDialog from '../components/LogoutDialog';
+import  { ThemeContext }  from '../scripts/theme';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
     const [islogOut,setIsLogOut] = useState(false);
@@ -11,6 +14,7 @@ function Header() {
     let navigate = useNavigate();
     const loignStatus = useContext(LoignStatus);
     const [dialog,setDialog] = useState(false); //dialog 顯示
+
     const handleClick = async () => {
         try {
             setDialog(true);
@@ -32,6 +36,10 @@ function Header() {
         }
     }, [islogOut]);
 
+    const ThemeButton = () =>{
+        const {toggleTheme} = useContext(ThemeContext)
+        return <button className="modeButton" onClick={toggleTheme}><FontAwesomeIcon icon={faCircleHalfStroke} size="2x" /></button>
+    }
 
     return (
         <>
@@ -39,6 +47,7 @@ function Header() {
             <div className="headerInfo">
                 <div className="headerLogo"><img className="logo" src={Logo} alt="" /></div>
                 <div className="rightHeader">
+                    <div className="modeTheme"><ThemeButton/></div>
                     <div className="userName">{userName}的代辦</div>
                     <div className="logOut" onClick={handleClick}>登出</div>
 

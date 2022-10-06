@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus} from '@fortawesome/free-solid-svg-icons';
 
-const { useState , useEffect } = React;
+const { useState } = React;
 const AddInputFrom = ({ onAdd }) => {
         const inputItem = onAdd;
         const [data, setData] = useState('');
@@ -15,7 +15,7 @@ const AddInputFrom = ({ onAdd }) => {
           <div className="todoInput">
             <div className="inputBox">
               <input className="addInput" value={data} onChange={(e) => { setData(e.target.value) }} />
-              <a href="#" onClick={onAddHandle}><FontAwesomeIcon icon={faSquarePlus} size="3x" /></a>
+              <a onClick={onAddHandle}><FontAwesomeIcon icon={faSquarePlus} size="3x" /></a>
             </div>
           </div>
         )

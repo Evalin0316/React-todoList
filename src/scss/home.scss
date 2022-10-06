@@ -17,17 +17,9 @@
         background: #FFD370;
     }
     .modeTheme{
-        display: flex;
-        justify-content: flex-end;
-        padding: 0 20px;
-        position: relative;
+        padding: 20px;
         .modeButton{
            cursor: pointer;
-           @include media-sm-min{
-            position: absolute;
-            bottom: 20px;
-            right: 190px;
-           }
         }
         .modeButton:hover{
             color:#3995d6;
