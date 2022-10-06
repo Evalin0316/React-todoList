@@ -3,7 +3,7 @@ import './scss/all.scss'
 import  Home from './page/Home';
 import Login from "./page/Login";
 import './App.css';
-import ThemeProvider from  './scripts/theme'
+import ThemeProvider from  './scripts/provider'
 
 function App() {
   return (

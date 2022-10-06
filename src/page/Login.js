@@ -13,16 +13,18 @@ const { useState , useEffect } = React;
 function Login() {
   const { register, handleSubmit, watch, formState: { errors },reset} = useForm();
   let navigate = useNavigate();
-  const loignStatus = useContext(LoignStatus);
+  const loginStatus = useContext(LoignStatus);
+  const Login = loginStatus.login;
 
     const [status,setStatus]=useState('Login');
-    const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;  // eslint-disable-line
+     // eslint-disable-next-line
+    const email_val = /^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m;
 
     useEffect(()=>{
-      if(loignStatus.login === true){
+      if(Login === true){
         navigate('/home');
-      }
-    },[loignStatus.login]);
+      } // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[Login]);
 
     //login
     const onSubmit = async form =>{
@@ -35,7 +37,7 @@ function Login() {
         const userName = JSON.stringify({user:response.data})
         localStorage.setItem('token', token);
         localStorage.setItem('userName',userName)
-        loignStatus.setlogin(true);
+        loginStatus.setlogin(true);
       } catch (err) {
         console.log(err)
         toast.error(err.response.data.message);
@@ -107,7 +109,8 @@ function Login() {
                   <h2 className="contentTitle">註冊帳號</h2>
                     <label className="loginTitle">Email</label>
                     <input className="loginInput" id="email" name="register_email" autoComplete="off" placeholder="請輸入email" {...register('email',{required:true,
-                      pattern:{value:/^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m}})}/>
+                      pattern:{// eslint-disable-next-line
+                      value:/^([A-Za-z0-9_\.\-\+])+\@(([a-zA-Z0-9\_-])+\.)+([a-zA-Z0-9\.]{2,4})+$/m}})}/> 
                     <div className="errorMessage">{errors.email && errors.email.type==="required" && "此欄位不可為空"}</div>
                     <div className="errorMessage">{errors.email && errors.email.type==="pattern" && "email輸入格式有誤"}</div>
                     <label className="loginTitle">您的暱稱</label>
