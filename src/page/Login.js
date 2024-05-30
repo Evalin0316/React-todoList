@@ -11,7 +11,6 @@ import  { LoginStatus }  from '../scripts/theme';
 const { useState , useEffect } = React;
 
 function Login() {
-  console.log("Login 被觸發了~");
   const { register, handleSubmit, watch, formState: { errors },reset} = useForm();
   let navigate = useNavigate();
   const loginStatus = useContext(LoginStatus);
