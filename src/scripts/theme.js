@@ -14,7 +14,7 @@ export const ThemeContext = React.createContext({
   toggleTheme: () => {}
 });
 
-export const LoignStatus = React.createContext({
+export const LoginStatus = React.createContext({
   login:false,
-  setlogin:() =>{}
+  onLogin:() =>{}
 });

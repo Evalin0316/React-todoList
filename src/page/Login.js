@@ -6,14 +6,15 @@ import { useForm } from "react-hook-form";
 import  {userLogin, userRegister}  from "../scripts/api";
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import  { LoignStatus }  from '../scripts/theme';
+import  { LoginStatus }  from '../scripts/theme';
 
 const { useState , useEffect } = React;
 
 function Login() {
+  console.log("Login 被觸發了~");
   const { register, handleSubmit, watch, formState: { errors },reset} = useForm();
   let navigate = useNavigate();
-  const loginStatus = useContext(LoignStatus);
+  const loginStatus = useContext(LoginStatus);
   const Login = loginStatus.login;
 
     const [status,setStatus]=useState('Login');
@@ -28,18 +29,14 @@ function Login() {
 
     //login
     const onSubmit = async form =>{
-
-      console.log(watch('email'));
       try {
         const response = await userLogin({user:form});
-        console.log(response)
         const token = JSON.stringify({token:response.headers})
         const userName = JSON.stringify({user:response.data})
         localStorage.setItem('token', token);
         localStorage.setItem('userName',userName)
-        loginStatus.setlogin(true);
+        loginStatus.onLogin(true);
       } catch (err) {
-        console.log(err)
         toast.error(err.response.data.message);
       }
     }
@@ -50,7 +47,6 @@ function Login() {
         toast.success(response.data.message);
         setStatus('Login');
       } catch (err) {
-        console.log(err);
         toast.error(err.response.data.message +':' + err.response.data.error)
       }
     }

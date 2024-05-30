@@ -1,28 +1,32 @@
-import React, { useState } from "react";
-import { ThemeContext, LoignStatus,themes} from './theme';
+import React, { useState, useMemo, useCallback } from "react";
+import { ThemeContext, LoginStatus, themes} from './theme';
 
 const Provider = ({ children }) => {
     const [light, setLight] = useState(true);
     const [login, setLogin] = useState(false);
-    const toggleTheme = () => setLight(!light);
-    const setlogin = () =>  setLogin(!login);
+    const toggleTheme = useCallback(() =>{setLight(!light)}, [light]);
+    const onLogin =  useCallback(() => {setLogin(!login)}, [login]);
 
     const theme = light ?  themes.light : themes.dark ;
    
     
-    const defaultValue = {
+    const defaultValue = useMemo(
+      ()=>({
       toggleTheme,
       theme,
-    };
-    const userStatus = {
-      setlogin,
+    }),[toggleTheme, theme]);
+
+    const userStatus = useMemo(
+      ()=>({
+      onLogin,
       login
-    }
+    }),[onLogin,login])
+
     return (
       <ThemeContext.Provider value={defaultValue}>
-      <LoignStatus.Provider value={userStatus}>
+      <LoginStatus.Provider value={userStatus}>
         {children}
-      </LoignStatus.Provider>
+      </LoginStatus.Provider>
       </ThemeContext.Provider>
     );
   };

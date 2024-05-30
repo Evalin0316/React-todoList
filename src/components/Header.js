@@ -2,17 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import Logo from "../assets/img/todoListLogo.png";
 import { useNavigate } from 'react-router-dom';
 import { userLogout } from "../scripts/api";
-import { LoignStatus } from '../scripts/theme';
 import LogoutDialog from '../components/LogoutDialog';
-import  { ThemeContext }  from '../scripts/theme';
+import  { ThemeContext, LoginStatus }  from '../scripts/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
-    const [islogOut,setIsLogOut] = useState(false);
+    const [isLogOut,setIsLogOut] = useState(false);
     const userName = JSON.parse(localStorage.userName).user.nickname;
     let navigate = useNavigate();
-    const loignStatus = useContext(LoignStatus);
+    const loginStatus = useContext(LoginStatus);
     const [dialog,setDialog] = useState(false); //dialog 顯示
 
     const handleClick = async () => {
@@ -24,17 +23,17 @@ function Header() {
     }
 
     useEffect(() => {
-        if (islogOut) {
+        if (isLogOut) {
             const logOut = async() =>{
                 const response = await userLogout();
                 alert(response.data.message);
             }
             logOut();
             setIsLogOut(true);
-            loignStatus.setlogin(false);
+            loginStatus.onLogin(false);
             navigate('/');
         }
-    }, [islogOut, loignStatus, navigate]);
+    }, [isLogOut, loginStatus, navigate]);
 
     const ThemeButton = () =>{
         const {toggleTheme} = useContext(ThemeContext)
