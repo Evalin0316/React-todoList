@@ -29,22 +29,26 @@ function Home() {
 
   //新增項目method
   const addItem = async(text) => {
-    try{ 
-      await addTodo({content:text});
-      // const newData = {
-      //   id: new Date().getTime().toString(),
-      //   content:text,
-      //   checked: false,
-      // };
-      // setAddItem((item)=>{
-      //   console.log(item)
-      //   return item.concat(newData);
-      // })
-      setState('all'); //新增項目時，全部選單active
-      toast.success('新增成功');
-      getList();
-    }catch(err){
-      toast.error('新增失敗')
+    if(text){
+      try{
+        const addItemData = await addTodo({content:text});
+        const newData = {
+          id: addItemData.data.id,
+          content:text,
+          checked: false,
+        };
+        setAddItem((item)=>{
+          return [...item].concat(newData);
+        })
+
+        setState('all'); //新增項目時，全部選單active
+        toast.success('新增成功');
+        // getList();
+      }catch(err){
+        toast.error('新增失敗');
+      }
+    }else{
+      toast.error('請輸入文字');
     }
   };
 
@@ -96,22 +100,21 @@ function Home() {
     let result = additems.filter((item)=> item.completed_at);
     result.forEach(async(x)=>{
       await deleteItem(x.id);
-      getList();
+      // getList();
     })
-    console.log(result)
+  
+    let resultData = additems.filter((item)=> !item.completed_at);
+    setAddItem(resultData);
   }
 
   //編輯項目
   const changeEditItem = async(id,data) =>{
-      
     try{
       await editItem(id,data);
       toast.success('編輯成功')
     }catch(err){
       toast.error("更新失敗")
     }
-    
-  
   }
 
   //TodoList components
